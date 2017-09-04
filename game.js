@@ -7,6 +7,12 @@
 function randomizer(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+// ____________________________________________________
+// NOTIFICATIONS
+// ____________________________________________________
+var notify = {
+    hp:  player.name + "s HP: " + player.hp.currentHP 
+}
 // ***************************************************** 
 // Game Constructors
 // *****************************************************
@@ -18,7 +24,7 @@ function Player() {
     this.hp = {
         currentHP: 100,
         maxHP: 100,
-        minHp: 100
+        minHP: 0
     };
     this.energy = {
         currentEnergy: 100,
@@ -52,8 +58,30 @@ function Player() {
     this.currentWeapon = {};
 };
 // _____________________________________________________
+// ENEMY
+// _____________________________________________________
+function Enemy(name, minDamage, maxDamage) {
+    this.name =  name;
+    this.hp = {
+        currentHP: 100,
+        maxHP: 100,
+        minHP: 0
+    };
+    this.damage = {
+        minDamage: minDamage,
+        maxDamage: maxDamage
+    }
+    this.actions = {
+        attack: function() {
+            var attackDmg = randomizer(minDamage, maxDamage);
+            player.hp.currentHP -= attackDmg;
+            return("You took " + attackDmg + " damage! " +  notify.hp)
+        }
+    }
+};
+// _____________________________________________________
 // WEAPON
-// ____________________________________________________
+// _____________________________________________________
 function Weapon(name, minDamage, maxDamage) {
     this.name = name;
     this.damage = {
@@ -61,7 +89,7 @@ function Weapon(name, minDamage, maxDamage) {
         minDamage: minDamage
     };
     this.attackDmg = function() {
-        return randomizer(minDamage, maxDamage);
+        return randomizer(this.minDamage, this.maxDamage);
     };
 };
 // ________________________________________________
@@ -77,9 +105,22 @@ function HealthPotion(minRecover, maxRecover) {
         console.log("new hp: " + player.hp.currentHP);
     };
 };
-// _______________________________________________
+// ***************************************************** 
 // Game Objects
-// _______________________________________________
+// *****************************************************
+// ________________________________________________
+// POTIONS
+// ________________________________________________
 var healthPotion = new HealthPotion(20, 40);
+// ________________________________________________
+// WEAPONS
+// ________________________________________________
 var sword = new Weapon('Sword', 5, 20);
+// ________________________________________________
+// PLAYER
+// ________________________________________________
 var player = new Player();
+// ________________________________________________
+// ENEMIES
+// ________________________________________________
+var skeleton =  new Enemy('Skeleton', 5, 15);
