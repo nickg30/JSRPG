@@ -11,17 +11,36 @@ function randomizer(min, max) {
 // NOTIFICATIONS
 // ____________________________________________________
 var notify = {
-    hp: player.name + "s HP: " + player.hp.currentHP,
-    exp: "Player Experience: " + player.exp
+    hp: function() {
+        return player.name + "s HP: " + player.hp.currentHP;
+    },
+    exp: function() {
+        return "Player Experience: " + player.exp;
+    },
+    died: function() {
+        console.log(player.name + " has died.");
+    }
 }
 // ***************************************************** 
 // Game Constructors
 // *****************************************************
 // _____________________________________________________
+// GAME
+// _____________________________________________________
+function Game() {
+    this.options = {
+        reset: function() { 
+                 player = new Player();
+                 console.log("Game has been reset!");
+            }
+    }
+}
+// _____________________________________________________
 // PLAYER
 // _____________________________________________________
 function Player() {
     this.name = 'Nick';
+    this.dead = false;
     this.hp = {
         currentHP: 100,
         maxHP: 100,
@@ -84,9 +103,18 @@ function Enemy(name, minDamage, maxDamage, exp) {
     }
     this.actions = {
         attack: function() {
-            var attackDmg = randomizer(minDamage, maxDamage);
-            player.hp.currentHP -= attackDmg;
-            return("You took " + attackDmg + " damage! " +  notify.hp)
+            if(player.dead == false && player.hp.currentHP > 0) {
+                var attackDmg = randomizer(minDamage, maxDamage);
+                player.hp.currentHP -= attackDmg;
+                if(player.hp.currentHP > 0) {
+                    return("You took " + attackDmg + " damage! " +  notify.hp());
+                } else {
+                    notify.died();
+                    game.options.reset();
+                }
+            } else {
+                console.log("Error..");
+            }
         }
     }
 };
@@ -119,6 +147,10 @@ function HealthPotion(minRecover, maxRecover) {
 // ***************************************************** 
 // Game Objects
 // *****************************************************
+// ________________________________________________
+// GAME
+// ________________________________________________
+var game = new Game();
 // ________________________________________________
 // POTIONS
 // ________________________________________________
