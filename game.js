@@ -58,8 +58,14 @@ function Player() {
             // ISSUE 1 - write attack function
         }
     };
-    this.weapons = {};
-    this.currentWeapon = {};
+    this.weapons = {
+        currentWeapon: [],
+        equipWeapon: function(weapon) {
+            this.currentWeapon = [];
+            this.currentWeapon.push(weapon);
+        }
+    };
+
 };
 // _____________________________________________________
 // ENEMY
@@ -120,7 +126,8 @@ var healthPotion = new HealthPotion(20, 40);
 // ________________________________________________
 // WEAPONS
 // ________________________________________________
-var sword = new Weapon('Sword', 5, 20);
+var sword    = new Weapon('Sword', 5, 20);
+var smallAxe = new Weapon('Small Axe', 10, 15);
 // ________________________________________________
 // PLAYER
 // ________________________________________________
