@@ -11,7 +11,8 @@ function randomizer(min, max) {
 // NOTIFICATIONS
 // ____________________________________________________
 var notify = {
-    hp:  player.name + "s HP: " + player.hp.currentHP 
+    hp: player.name + "s HP: " + player.hp.currentHP,
+    exp: "Player Experience: " + player.exp
 }
 // ***************************************************** 
 // Game Constructors
@@ -52,6 +53,9 @@ function Player() {
                 console.log('rested!!!');
             }, howLong * 60000);
             console.log('resting...');
+        },
+        attack: function() {
+            // ISSUE 1 - write attack function
         }
     };
     this.weapons = {};
@@ -60,8 +64,9 @@ function Player() {
 // _____________________________________________________
 // ENEMY
 // _____________________________________________________
-function Enemy(name, minDamage, maxDamage) {
+function Enemy(name, minDamage, maxDamage, exp) {
     this.name =  name;
+    this.exp = exp;
     this.hp = {
         currentHP: 100,
         maxHP: 100,
@@ -123,4 +128,4 @@ var player = new Player();
 // ________________________________________________
 // ENEMIES
 // ________________________________________________
-var skeleton =  new Enemy('Skeleton', 5, 15);
+var skeleton =  new Enemy('Skeleton', 5, 15, 15);
