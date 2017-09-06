@@ -41,16 +41,14 @@ function Game() {
 function Level(name, expRequired) {
     this.name = name;
     this.expRequired = expRequired;
-    this.enemies = {
-        // fill with enemies
-    }
+    this.enemies = {}
 
 }
 // _____________________________________________________
 // PLAYER
 // _____________________________________________________
-function Player() {
-    this.name = 'Nick';
+function Player(name) {
+    this.name = name;
     this.dead = false;
     this.hp = {
         currentHP: 100,
@@ -80,12 +78,15 @@ function Player() {
         rest: function(howLong) {
             setTimeout(function () {
                 player.hp.currentHP += howLong * 25;
-                console.log('rested!!!');
+                console.log('rested! ' + player.name + " +" + howLong * 25);
             }, howLong * 60000);
             console.log('resting...');
         },
         attack: function() {
-            // ISSUE 1 - write attack function
+            // ISSUE #1 - write attack function
+            // currentWeapon.attack
+            // randomizer(minDMG, maxDMG)
+            // current enemy [].currentHP -= attackDMG
         }
     };
     this.weapons = {
@@ -180,7 +181,7 @@ var smallAxe = new Weapon('Small Axe', 10, 15);
 // ________________________________________________
 // PLAYER
 // ________________________________________________
-var player = new Player();
+var player = new Player('Nick');
 // ________________________________________________
 // ENEMIES
 // ________________________________________________
